@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
 
 const databaseString = 'mongodb://localhost:27017/todo';
-function connectDB(){
+async function connectDB(){
+    try {
+    await mongoose.connect(databaseString);
+        console.log('Successful connection!');
+    }catch(error){
+        console.log("An error during the database connection occured", error);
+    }
 
-    mongoose.connect(databaseString);
-
-    mongoose.connection.once('open', function () {
-        console.log('Successful connecting!');
-    });
-    mongoose.connection.on('error', error => {
-        console.log('Error', error);
-    });
 }
 export default connectDB;
+
