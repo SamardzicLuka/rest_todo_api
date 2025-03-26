@@ -1,10 +1,9 @@
-import express from 'express';
-import connectDB from './config/db.js';
+const express = require('express');
+const connectDB  = require('./config/db.js');
 
 const app = express();
 
 connectDB();
 
-// module.exports = app;  WROOONG!!!
-export default app;
+module.exports = app;
 
