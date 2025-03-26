@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const databaseString = 'mongodb://localhost:27017/todo';
 async function connectDB(){
@@ -10,5 +10,5 @@ async function connectDB(){
     }
 
 }
-export default connectDB;
+module.exports = connectDB;
 

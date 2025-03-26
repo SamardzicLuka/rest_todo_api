@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import { isEmail } from 'validator';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const { isEmail } = require('validator');
+const bcrypt = require('bcryptjs');
 
 const SALT_WORK_FACTOR = 10;
 const userSchema = new mongoose.Schema({
@@ -62,6 +62,6 @@ userSchema.methods.isValidPassword = async function(password) {
 
 const usersModel = mongoose.model('users', userSchema);
 
-export default usersModel;
+module.exports = usersModel;
 
 
