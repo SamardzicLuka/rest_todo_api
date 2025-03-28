@@ -10,7 +10,9 @@ const tasksSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
         required: true,
-    }
+    },
+   // VIDI NAPOMENE 
+
 });
 
 const tasksModel = mongoose.model('tasks', tasksSchema);
