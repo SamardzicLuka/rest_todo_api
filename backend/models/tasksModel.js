@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 const tasksSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -9,11 +10,13 @@ const tasksSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
         required: true,
-    }
+    },
+   // VIDI NAPOMENE 
+
 });
 
 const tasksModel = mongoose.model('tasks', tasksSchema);
 
-export default tasksModel;
+module.exports = tasksModel;
 
 
