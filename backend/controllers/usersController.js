@@ -13,10 +13,7 @@ module.exports.showTasks = async (req,res,next) => {
         }
 
         if(!user.taskList.length){
-            return res.status(200).json({
-                message: "No tasks scheduled",
-                tasks: [],
-            }); 
+            return res.status(204).send();
         }
 
         const page = parseInt(req.query.page) || 1;
@@ -78,7 +75,7 @@ module.exports.updateTask = async (req,res,next) => {
         if(req.body.description){
             task.description = req.body.description;
         }
-        if(req.body.taskCompleted){
+        if(req.body.taskCompleted !== undefined){
             task.taskCompleted = req.body.taskCompleted;
         }
 
@@ -90,3 +87,20 @@ module.exports.updateTask = async (req,res,next) => {
         next(error);
    } 
 }
+
+module.exports.deleteTask = async (req,res,next) => {
+    try {
+        const task = await Task.findById(req.params.id);
+        if(!task){
+            return res.status(404).json({error: "Task not found"});
+        }else{
+            await User.findByIdAndUpdate(task.user, { $pull: { taskList: task._id } }).exec();
+
+            await Task.findByIdAndDelete(req.params.id).exec();
+        }
+    } catch (error) {
+       next(error);
+    }
+}
+
+
