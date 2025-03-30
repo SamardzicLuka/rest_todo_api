@@ -66,6 +66,8 @@ module.exports.login = async (req, res, next) => {
 // since this is only a backend API, during the testing, we will manually import this token 
 // in the POSTMAN. If we were to implement the frontend as well, the token should be stored 
 // in a session storage, local storage or in a cookie, and then retrieved dynamically. 
+
+        //                          payload         secret
         const token = jwt.sign({userID: user._id}, secret_key, {
             expiresIn: '1h',
         });
