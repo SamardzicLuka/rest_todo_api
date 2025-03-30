@@ -19,7 +19,13 @@ const userSchema = new mongoose.Schema({
         validate: [isEmail, 'invalid Email'],
         required: [true, 'Email required'],
         unique: true,
-    }
+    }, 
+    taskList: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Task', // Reference to the Task model
+        }
+    ],
 });
 
 userSchema.pre('save', async function(next){

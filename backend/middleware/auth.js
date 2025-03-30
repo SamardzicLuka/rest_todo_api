@@ -9,7 +9,7 @@ const authenticateUser = async (req,res,next) => {
     const token = req.get('Authorization');
 
     if(!token){
-        return res.send(401).json({error: "Access denied. No token provided"});
+        return res.status(401).json({error: "Access denied. No token provided"});
     }
 
     try {
@@ -17,7 +17,7 @@ const authenticateUser = async (req,res,next) => {
         // <Authorization: <type> <credentials> in this case it will be 
         // Bearer <my_token>, so we will format the string accordingly
 
-        const decodedToken = jwt.verify(token.replace('Bearer ', ''));
+        const decodedToken = jwt.verify(token.replace('Bearer ', ''),secret_key);
         req.user = decodedToken;
         next();
 

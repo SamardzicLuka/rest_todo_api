@@ -11,8 +11,10 @@ const tasksSchema = new mongoose.Schema({
         ref: 'users',
         required: true,
     },
-   // VIDI NAPOMENE 
-
+    taskCompleted: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const tasksModel = mongoose.model('tasks', tasksSchema);
