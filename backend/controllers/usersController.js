@@ -1,4 +1,5 @@
 const User = require('../models/usersModel');
+const Task = require('../models/tasksModel');
 
 module.exports.showTasks = async (req,res,next) => {
     try {
@@ -40,3 +41,52 @@ module.exports.showTasks = async (req,res,next) => {
     }
 }
 
+module.exports.createTask = async (req, res, next) => {
+    if(!req.body.title){
+        return res.status(400).json({error: "Title required that has not been provided"});
+    }
+    try{
+        const user = await User.findById(req.user.userID).exec();
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const newTask = new Task({
+            _id: new mongoose.Types.ObjectId(),
+            title: req.body.title,
+            description: req.body.description,
+            user: req.user.userID,
+            taskCompleted: false,
+        });
+        await newTask.save();
+        
+        user.taskList.push(newTask._id);
+        await user.save();
+       
+        res.status(201).json(newTask);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports.updateTask = async (req,res,next) => {
+   try {
+        const task = await Task.findById(req.params.id);
+        if(!task){
+            return res.status(404).json({error: "Task not found"});
+        }
+        if(req.body.description){
+            task.description = req.body.description;
+        }
+        if(req.body.taskCompleted){
+            task.taskCompleted = req.body.taskCompleted;
+        }
+
+        await task.save();
+
+        res.status(200).json({message: "Task updated successfully", task});
+
+   } catch (error) {
+        next(error);
+   } 
+}

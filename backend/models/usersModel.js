@@ -19,11 +19,7 @@ const userSchema = new mongoose.Schema({
         validate: [isEmail, 'invalid Email'],
         required: [true, 'Email required'],
         unique: true,
-    },
-    taskCompleted: {
-        type: Boolean,
-        default: false,
-    },
+    }, 
     taskList: [
         {
             type: mongoose.Schema.Types.ObjectId,
