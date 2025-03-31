@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB  = require('./config/db.js');
 const {urlencoded, json} = require('body-parser');
 const usersRoutes = require('./routes/api/users');
-const rateLimit = require('express-rate-limiter');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -40,3 +40,9 @@ connectDB();
 
 module.exports = app;
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> master
