@@ -14,16 +14,16 @@ router.post('/login', authController.login);
 
 
 //http://localhost:3000/api/api/tasks?page=1&limit=10
-router.get('/api/api/tasks',authenticateUser, usersController.showTasks);
+router.get('/tasks',authenticateUser, usersController.showTasks);
 
 //http://localhost:3000/api/api/tasks
-router.post('/api/tasks',authenticateUser, usersController.createTask); // create a new task
+router.post('/tasks',authenticateUser, usersController.createTask); // create a new task
 
 //http://localhost:3000/api/api/tasks/id
-router.put('/api/tasks/:id', authenticateUser, usersController.updateTask); // update task. we can either 
+router.put('/tasks/:id', authenticateUser, usersController.updateTask); // update task. we can either 
                                                     // complete the whole task or change the description
 //http://localhost:3000/api/api/tasks/id
-router.delete('/api/tasks/:id',authenticateUser, usersController.deleteTask);
+router.delete('/tasks/:id',authenticateUser, usersController.deleteTask);
 
 router.use((req, res, next) => {
     const unknownMethod = req.method;       
