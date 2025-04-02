@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        match: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
         required: true,
     },
     email: {
@@ -23,21 +22,28 @@ const userSchema = new mongoose.Schema({
     taskList: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Task', // Reference to the Task model
+            ref: 'tasks', // Reference to the tasks model
         }
     ],
 });
 
 userSchema.pre('save', async function(next){
     try {
-        const existingUserByUsername = await mongoose.models.User.findOne({
+
+        // without this, pre-save hook will prevent us from updating our tasklist
+        // since it checks whether the username already exists
+        if(this.isModified('taskList')){
+            return next();
+        }
+
+        const existingUserByUsername = await this.constructor.findOne({ //mongoose.models.User.findOne({
             username: this.username
         });
         if(existingUserByUsername){
             return next(new Error('Username already taken'));
         }
 
-        const existingUserByEmail = await mongoose.models.User.findOne({
+        const existingUserByEmail = await this.constructor.findOne({ //mongoose.models.User.findOne({
             email: this.email
         });
         if(existingUserByEmail){
