@@ -10,8 +10,8 @@ app.use(json());
 app.use(urlencoded({extended: false}));
 
 const limiter = rateLimit({
-  windowMs: 5 * 60 * 1000,
-  max: 5,
+    windowMs: 15 * 60 * 1000,
+    max: 10,
 });
 
 app.use(limiter);
@@ -40,9 +40,4 @@ connectDB();
 
 module.exports = app;
 
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> master

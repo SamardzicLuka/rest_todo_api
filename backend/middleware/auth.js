@@ -6,7 +6,7 @@ if(!secret_key){
 }
 
 const authenticateUser = async (req,res,next) => {
-    const token = req.get('Authorization');
+    const token = req.header('Authorization');
 
     if(!token){
         return res.status(401).json({error: "Access denied. No token provided"});
@@ -22,7 +22,7 @@ const authenticateUser = async (req,res,next) => {
         next();
 
     } catch (error) {
-       res.status(400).json({error: "Invalid token"});
+       res.status(400).json({error: "Invalid token", details: error.message});
     }
 };
 

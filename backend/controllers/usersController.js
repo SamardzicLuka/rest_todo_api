@@ -1,4 +1,5 @@
 const User = require('../models/usersModel');
+const mongoose = require('mongoose');
 const Task = require('../models/tasksModel');
 
 module.exports.showTasks = async (req,res,next) => {
@@ -40,7 +41,7 @@ module.exports.showTasks = async (req,res,next) => {
 
 module.exports.createTask = async (req, res, next) => {
     if(!req.body.title){
-        return res.status(400).json({error: "Title required that has not been provided"});
+        return res.status(400).json({error: "Title required has not been provided"});
     }
     try{
         const user = await User.findById(req.user.userID).exec();
@@ -97,6 +98,7 @@ module.exports.deleteTask = async (req,res,next) => {
             await User.findByIdAndUpdate(task.user, { $pull: { taskList: task._id } }).exec();
 
             await Task.findByIdAndDelete(req.params.id).exec();
+            return res.status(200).json({message: "The task has been successfull deleted"});
         }
     } catch (error) {
        next(error);

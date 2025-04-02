@@ -1,6 +1,5 @@
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const User = require('../models/usersModel');
 const bcrypt = require('bcryptjs');
 
@@ -9,7 +8,6 @@ dotenv.config();
 const secret_key = process.env.SECRET_KEY;
 if(!secret_key){
     throw new Error("Secret key is not defined");
-    
 }
 
 //http://localhost:3000/api/register
@@ -17,6 +15,11 @@ module.exports.register = async (req, res, next) => {
     try {
         const password = req.body.password;
         const confirmPassword = req.body.confirmPassword;
+
+        if (!password || !confirmPassword || password.trim() === '' 
+                || confirmPassword.trim() === ''){
+            return res.status(400).json({error: "Please provide passwords"});
+        }
 
         if (password !== confirmPassword){
             return res.status(400).json({error: "Passwords do not match"});
